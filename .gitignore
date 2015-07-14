@@ -1,0 +1,5 @@
+*.py[cod]
+.idea/workspace.xml
+.idea/*.iml
+*.orig
+.idea/misc.xml

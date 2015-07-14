@@ -3,3 +3,5 @@
 .idea/*.iml
 *.orig
 .idea/misc.xml
+build/
+dist/

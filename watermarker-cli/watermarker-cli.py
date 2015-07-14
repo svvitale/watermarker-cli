@@ -1,6 +1,7 @@
 from watermark import Watermark
 import argparse
 import os
+import sys
 
 
 def apply_watermark(file_path, args):
@@ -8,11 +9,7 @@ def apply_watermark(file_path, args):
     # Process an individual file
     image = Watermark(file_path)
     image.apply_text(args.text, tile=args.tile)
-
-    if args.output_dir:
-        output_file = os.path.join(args.output_dir, os.path.basename(file_path))
-    else:
-        output_file = file_path
+    output_file = os.path.join(args.output_dir, os.path.basename(file_path))
 
     print("Saving " + output_file)
     image.save(output_file)
@@ -27,13 +24,20 @@ def main():
     parser.add_argument('-t', '--text', required=True, type=str, help='Text watermark to apply.')
     parser.add_argument('-l', '--tile', default=False, action='store_true',
                         help='Tile watermark multiple times across image')
-    parser.add_argument('-o', '--output_dir', default=None,
+    parser.add_argument('-o', '--output_dir', default='watermark',
                         help='Directory in which to place output files.  If not specified, the source files will be'
-                             'replaced.')
+                             'placed in a directory named "watermark".')
     parser.add_argument('-q', '--quiet', default=False, action='store_true',
                         help='If specified, watermarking will be performed without any prompting.')
 
     args = parser.parse_args()
+
+    if not os.path.isdir(args.output_dir):
+        try:
+            os.makedirs(args.output_dir)
+        except OSError:
+            print("Error creating output directory: " + args.output_dir)
+            sys.exit(1)
 
     for file_or_dir in args.files_or_dirs:
         if os.path.isfile(file_or_dir):

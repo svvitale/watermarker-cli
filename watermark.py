@@ -14,7 +14,7 @@ class Watermark(object):
         'valign': VALIGNMENTS[0],
         'scale': 0.2,
         'tile': False,
-        'opacity': 0.5,
+        'opacity': 0.6,
         'color': None,
         'margin': (0, 0)
     }

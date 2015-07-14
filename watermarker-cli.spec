@@ -1,6 +1,6 @@
 # -*- mode: python -*-
-a = Analysis(['watermarker-cli.py'],
-             pathex=['C:\\code\\watermarker-cli'],
+a = Analysis(['watermarker-cli\\watermarker-cli.py'],
+             pathex=['watermarker-cli'],
              hiddenimports=[],
              hookspath=None,
              runtime_hooks=None)
@@ -10,7 +10,7 @@ exe = EXE(pyz,
           a.binaries,
           a.zipfiles,
           a.datas + [
-            ('Qwigley-Regular.ttf', 'Qwigley-Regular.ttf', 'DATA')
+            ('Qwigley-Regular.ttf', 'watermarker-cli\\Qwigley-Regular.ttf', 'DATA')
           ],
           name='watermarker-cli.exe',
           debug=False,

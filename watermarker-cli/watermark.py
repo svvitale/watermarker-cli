@@ -14,8 +14,8 @@ class Watermark(object):
         'valign': VALIGNMENTS[0],
         'scale': 0.2,
         'tile': False,
-        'opacity': 0.2,
-        'color': None,
+        'opacity': (1,),  # scale of 0 to 255
+        'color': (255, 255, 255),  # white
         'margin': (0, 0)
     }
 
@@ -63,7 +63,8 @@ class Watermark(object):
             text_y = text_y_margin
 
             while (text_y + text_height + text_y_margin) < height:
-                text_draw.text((text_x, text_y), text, font=font, fill=self.__options.get('color'))
+                text_draw.text((text_x, text_y), text, font=font,
+                               fill=self.__options.get('color') + self.__options.get('opacity'))
                 text_y += text_height + text_y_margin
         else:
             # Not tiling, must be a fixed position
@@ -86,13 +87,8 @@ class Watermark(object):
                 raise ValueError('Invalid vertical alignment specified')
 
             # Draw the text once
-            text_draw.text((text_x, text_y), text, font=font, fill=self.__options.get('color'))
-
-        # Adjust opacity
-        if self.__options.get('opacity') != 1:
-            alpha = text_layer.split()[3]
-            alpha = ImageEnhance.Brightness(alpha).enhance(self.__options.get('opacity'))
-            text_layer.putalpha(alpha)
+            text_draw.text((text_x, text_y), text, font=font,
+                           fill=self.__options.get('color') + self.__options.get('opacity'))
 
         # Update our internal image
         self.__image = Image.composite(text_layer, self.__image, text_layer)

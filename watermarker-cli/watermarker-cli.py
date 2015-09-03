@@ -44,6 +44,11 @@ def main():
             apply_watermark(file_or_dir, args)
         if os.path.isdir(file_or_dir):
             for root, dirs, files in os.walk(file_or_dir):
+
+                # Skip our output directory if it's in our input directory
+                if os.path.abspath(os.path.realpath(root)) == os.path.abspath(os.path.realpath(args.output_dir)):
+                    continue
+
                 for image_file in files:
                     if os.path.splitext(image_file)[1] in valid_files:
                         apply_watermark(os.path.join(root, image_file), args)

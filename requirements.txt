@@ -1,4 +1,4 @@
-Pillow==2.9.0
+Pillow==6.2.0
 PyInstaller==2.1
 pypandoc==0.9.9
 pywin32==219
